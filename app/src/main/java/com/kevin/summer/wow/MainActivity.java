@@ -1,7 +1,5 @@
 package com.kevin.summer.wow;
 
-import com.google.gson.JsonObject;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kevin.summer.wow.data.entry.RealmInfo;
-import com.kevin.summer.wow.data.remote.APIService;
+import com.kevin.summer.wow.data.remote.BattleAPI;
 import com.kevin.summer.wow.data.response.RealmResponse;
 
 import java.util.List;
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     RealmAdapter adapter;
     io.realm.Realm mRealm;
     RealmResults<RealmInfo> mRealmInfos;
-    APIService api;
+    BattleAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         adapter = new RealmAdapter(this, mRealmInfos,true);
         recyclerView.setAdapter(adapter);
 
-        api = APIService.APIServiceFactory.get();
+        api = BattleAPI.APIServiceFactory.get();
     }
 
     @Override
@@ -135,7 +133,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadRealmRemote() {
-        Call<RealmResponse> call = api.getRealms(APIService.APIServiceFactory.defaultMap);
+        Call<RealmResponse> call = api.getRealms(BattleAPI.APIServiceFactory.defaultMap);
         call.enqueue(new Callback<RealmResponse>() {
             @Override
             public void onResponse(Call<RealmResponse> call, Response<RealmResponse> response) {
